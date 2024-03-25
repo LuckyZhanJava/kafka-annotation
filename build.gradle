@@ -133,21 +133,21 @@ if (file('.git').exists()) {
     excludes = new ArrayList<String>(repo.clean(ignore: false, directories: true, dryRun: true))
     // And some of the files that we have checked in should also be excluded from this check
     excludes.addAll([
-        '**/.git/**',
-        '**/build/**',
-        'CONTRIBUTING.md',
-        'PULL_REQUEST_TEMPLATE.md',
-        'gradlew',
-        'gradlew.bat',
-        'gradle/wrapper/gradle-wrapper.properties',
-        'TROGDOR.md',
-        '**/README.md',
-        '**/id_rsa',
-        '**/id_rsa.pub',
-        'checkstyle/suppressions.xml',
-        'streams/quickstart/java/src/test/resources/projects/basic/goal.txt',
-        'streams/streams-scala/logs/*',
-        '**/generated/**'
+            '**/.git/**',
+            '**/build/**',
+            'CONTRIBUTING.md',
+            'PULL_REQUEST_TEMPLATE.md',
+            'gradlew',
+            'gradlew.bat',
+            'gradle/wrapper/gradle-wrapper.properties',
+            'TROGDOR.md',
+            '**/README.md',
+            '**/id_rsa',
+            '**/id_rsa.pub',
+            'checkstyle/suppressions.xml',
+            'streams/quickstart/java/src/test/resources/projects/basic/goal.txt',
+            'streams/streams-scala/logs/*',
+            '**/generated/**'
     ])
   }
 }
@@ -195,31 +195,31 @@ subprojects {
   uploadArchives {
     repositories {
       signing {
-          required { shouldSign }
-          sign configurations.archives
+        required { shouldSign }
+        sign configurations.archives
 
-          // To test locally, replace mavenUrl in ~/.gradle/gradle.properties to file://localhost/tmp/myRepo/
-          mavenDeployer {
-              beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-              repository(url: "${mavenUrl}") {
-                  authentication(userName: "${mavenUsername}", password: "${mavenPassword}")
-              }
-              afterEvaluate {
-                  pom.artifactId = "${archivesBaseName}"
-                  pom.project {
-                      name 'Apache Kafka'
-                      packaging 'jar'
-                      url 'https://kafka.apache.org'
-                      licenses {
-                          license {
-                              name 'The Apache Software License, Version 2.0'
-                              url 'https://www.apache.org/licenses/LICENSE-2.0.txt'
-                              distribution 'repo'
-                          }
-                      }
-                  }
-              }
+        // To test locally, replace mavenUrl in ~/.gradle/gradle.properties to file://localhost/tmp/myRepo/
+        mavenDeployer {
+          beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+          repository(url: "${mavenUrl}") {
+            authentication(userName: "${mavenUsername}", password: "${mavenPassword}")
           }
+          afterEvaluate {
+            pom.artifactId = "${archivesBaseName}"
+            pom.project {
+              name 'Apache Kafka'
+              packaging 'jar'
+              url 'https://kafka.apache.org'
+              licenses {
+                license {
+                  name 'The Apache Software License, Version 2.0'
+                  url 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                  distribution 'repo'
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -242,7 +242,7 @@ subprojects {
     beforeTest { TestDescriptor td ->
       def tid = testId(td)
       def logFile = new File(
-          "${projectDir}/build/reports/testOutput/${tid}.test.stdout")
+              "${projectDir}/build/reports/testOutput/${tid}.test.stdout")
       logFile.parentFile.mkdirs()
       logFiles.put(tid, logFile)
       logStreams.put(tid, new FileOutputStream(logFile))
@@ -424,27 +424,27 @@ subprojects {
 
   tasks.withType(ScalaCompile) {
     scalaCompileOptions.additionalParameters = [
-      "-deprecation",
-      "-unchecked",
-      "-encoding", "utf8",
-      "-Xlog-reflective-calls",
-      "-feature",
-      "-language:postfixOps",
-      "-language:implicitConversions",
-      "-language:existentials",
-      "-Xlint:constant",
-      "-Xlint:delayedinit-select",
-      "-Xlint:doc-detached",
-      "-Xlint:missing-interpolator",
-      "-Xlint:nullary-override",
-      "-Xlint:nullary-unit",
-      "-Xlint:option-implicit",
-      "-Xlint:package-object-classes",
-      "-Xlint:poly-implicit-overload",
-      "-Xlint:private-shadow",
-      "-Xlint:stars-align",
-      "-Xlint:type-parameter-shadow",
-      "-Xlint:unused"
+            "-deprecation",
+            "-unchecked",
+            "-encoding", "utf8",
+            "-Xlog-reflective-calls",
+            "-feature",
+            "-language:postfixOps",
+            "-language:implicitConversions",
+            "-language:existentials",
+            "-Xlint:constant",
+            "-Xlint:delayedinit-select",
+            "-Xlint:doc-detached",
+            "-Xlint:missing-interpolator",
+            "-Xlint:nullary-override",
+            "-Xlint:nullary-unit",
+            "-Xlint:option-implicit",
+            "-Xlint:package-object-classes",
+            "-Xlint:poly-implicit-overload",
+            "-Xlint:private-shadow",
+            "-Xlint:stars-align",
+            "-Xlint:type-parameter-shadow",
+            "-Xlint:unused"
     ]
 
     // Inline more aggressively when compiling the `core` jar since it's not meant to be used as a library.
@@ -462,13 +462,13 @@ subprojects {
     // See https://www.lightbend.com/blog/scala-inliner-optimizer for more information about the optimizer.
     scalaCompileOptions.additionalParameters += ["-opt:l:inline"]
     scalaCompileOptions.additionalParameters += inlineFrom
-    
+
     // these options are valid for Scala versions < 2.13 only
     // Scala 2.13 removes them, see https://github.com/scala/scala/pull/6502 and https://github.com/scala/scala/pull/5969
     if (versions.baseScala == '2.12') {
       scalaCompileOptions.additionalParameters += [
-        "-Xlint:by-name-right-associative",
-        "-Xlint:unsound-match"
+              "-Xlint:by-name-right-associative",
+              "-Xlint:unsound-match"
       ]
     }
 
@@ -674,25 +674,25 @@ for ( sv in availableScalaVersions ) {
 }
 
 def connectPkgs = [
-    'connect:api',
-    'connect:basic-auth-extension',
-    'connect:file',
-    'connect:json',
-    'connect:runtime',
-    'connect:transforms',
-    'connect:mirror',
-    'connect:mirror-client'
+        'connect:api',
+        'connect:basic-auth-extension',
+        'connect:file',
+        'connect:json',
+        'connect:runtime',
+        'connect:transforms',
+        'connect:mirror',
+        'connect:mirror-client'
 ]
 
 def pkgs = [
-    'clients',
-    'examples',
-    'log4j-appender',
-    'streams',
-    'streams:examples',
-    'streams:streams-scala',
-    'streams:test-utils',
-    'tools'
+        'clients',
+        'examples',
+        'log4j-appender',
+        'streams',
+        'streams:examples',
+        'streams:streams-scala',
+        'streams:test-utils',
+        'tools'
 ] + connectPkgs
 
 /** Create one task per default Scala version */
@@ -940,7 +940,7 @@ project(':core') {
 
   jar.manifest {
     attributes(
-      'Version': "${version}"
+            'Version': "${version}"
     )
   }
 
@@ -1032,8 +1032,8 @@ project(':clients') {
     outputs.upToDateWhen { false }
     doLast {
       def data = [
-        commitId: commitId,
-        version: version,
+              commitId: commitId,
+              version: version,
       ]
 
       receiptFile.parentFile.mkdirs()
@@ -1045,7 +1045,7 @@ project(':clients') {
   jar {
     dependsOn createVersionFile
     from("$buildDir") {
-        include "kafka/$buildVersionFileName"
+      include "kafka/$buildVersionFileName"
     }
   }
 
@@ -1558,14 +1558,14 @@ project(':jmh-benchmarks') {
 
     doFirst {
       if (System.getProperty("jmhArgs")) {
-          args System.getProperty("jmhArgs").split(',')
+        args System.getProperty("jmhArgs").split(',')
       }
       args = [shadowJar.archivePath, *args]
     }
   }
 
   javadoc {
-     enabled = false
+    enabled = false
   }
 }
 
